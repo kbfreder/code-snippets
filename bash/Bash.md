@@ -106,3 +106,25 @@ print (cat) the latest file in a folder
     - v: verbose. list files processed
     - f: archive file to use.
     - common usage: tar xvf <archive_file>
+
+
+# arrays
+https://opensource.com/article/18/5/you-dont-know-bash-intro-bash-arrays
+
+- defining:
+    allThreads=(1 2 4 8 16 32 64 128)
+    - note: no space between var name & equal sign!
+
+- looping over:
+    for t in ${allThreads[@]}; do
+        echo $t
+    done
+
+- appending to:
+    allOutput=()
+    for t in ${allThreads[@]}; do
+        ouput=$(./script.sh --threads $t)
+        allOutput+=( $output )
+    done
+
+

@@ -37,6 +37,11 @@ def parse_args():
         help="Run in test mode",
         default=False,
     )
+    parser.add_argument(
+        "--run-mode",
+        help="Run Mode",
+        choices=("a", "b")
+    )
     # for when this script gets moved to Docker; for now these args aren't used
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument(
@@ -62,6 +67,9 @@ if __name__ == "__main__":
     
     input_path = args['input']
     output_path = args['output']
+
+    # for python2, must use this syntax:
+    # input_path = args.input
 
     if args.local:
         host = "localhost"
