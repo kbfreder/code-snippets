@@ -1,0 +1,21 @@
+[
+    {
+        "Name": "Master - 1",
+        "InstanceGroupType": "MASTER",
+        "InstanceType": "c6g.2xlarge",
+        "InstanceCount": 1
+    },
+    {
+        "Name": "Core - 2",
+        "InstanceGroupType": "CORE",
+        "InstanceType": "c6g.12xlarge",
+        "InstanceCount": 2
+    },
+    {
+        "Name": "Task - 3",
+        "InstanceGroupType": "TASK",
+        "InstanceType": "c6g.12xlarge",
+        "InstanceCount": 6,
+        "BidPrice": "OnDemandPrice"
+    }
+]

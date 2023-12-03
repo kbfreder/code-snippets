@@ -7,7 +7,7 @@ import pandas as pd
 
 pd.set_option("display.max_columns", 100)
 
-# to silence the 'Setting with Copy' (??) warning
+# to silence the 'Settings with Copy' warning
 pd.options.mode.chained_assignment = None
 
 # if tab auto-complete isn't working in Jupyter
@@ -18,6 +18,13 @@ pd.options.mode.chained_assignment = None
 import warnings
 warnings.filterwarnings("ignore", category=RuntimeWarning)
 
+# divide by zero errors ("RuntimeWarning: invalid value encountered in true_divide")
+np.seterr(invalid='ignore')
+
+
+# ------------------------------
+# MISC
+# ------------------------------
 
 # to flatten a nested list:
 flat_list = [item for sublist in nested_list for item in sublist]

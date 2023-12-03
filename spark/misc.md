@@ -18,5 +18,10 @@ import pyspark.sql.functions as F
         "TP": "1G"
     }
     mapping_expr = F.create_map([F.lit(x) for x in chain(*gds_conversion_dict.items())])
+    
+    # Spark >= 2.0, < 3.0
     pcc_df = pcc_df.withColumn("gds", mapping_expr.getItem(F.col("AGENCY - GDS")))
+    
+    # Spark >= 3.0
+    pcc_df = pcc_df.withColumn("gds", mapping_expr[F.col("AGENCY - GDS")])
 ```

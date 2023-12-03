@@ -19,3 +19,13 @@ df.write.mode("append").parquet("hdfs:///path/to/folder")
     # parquet files will be saved within this location / folder
 
 df.write.mode("overwrite").option("header", True).csv("hdfs://path/to/file.csv")
+
+# 
+(df
+ .repartition(2) # or .coalesce(20)
+ .partitionBy("market")
+ .write.parquet(SAVE_PATH)
+ )
+    # save to "folder" structure: SAVE_PATH/marketA/..., SAVE_PATH/marketB/...,
+    # 2 files written per folder partition
+    

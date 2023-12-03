@@ -5,6 +5,15 @@ import pyspark.sql.functions as F
 # get an element of an array
 df.withColumn("first_out_cxr", F.col("out_marketing_cxr")[0])
 
+# filter array contains
+df.filter(F.array_contains("array_col", val))
+
+```scala
+val pos_list: Array[String] = Array("US", "GB", "HK", "RU", "CA", "IN", "TW", "DE", "AU", "TH", "JP", "KR", "PH", "ES", "IT", "FR", "IL", "MY", "AE", "PT")
+
+val df2_filt = df2.filter(col("pos_decoded") isin(pos_list: _*))
+```
+
 # explode array to cols
 - I think you have to do this manually
     - use above to extract each element of an array, sending to a new column
@@ -39,6 +48,14 @@ BUDGET_CXRS = ['NK', 'F9']
 df_ow_mf = df_ow_mf.withColumn("out_cxr_is_budget", F.size(F.array_intersect(F.col("out_cxrs"), F.array([F.lit(x) for x in BUDGET_CXRS]))) > 0)
 ```
 
+# filter array
+is_even = lambda x: x % 2 == 0
+res = df.withColumn("arr_evens", F.filter(F.col("some_arr"), is_even))
+
+- using another column as the filter parameter:
+df = df.withColumn("num_test_gt_train", F.size(F.filter(F.col("lifetimes_in_min"), lambda x: x > F.col("ttl"))))
+
+
 
 # convert array element dtype
 ```python
@@ -59,8 +76,9 @@ df.select("out_flight_nos_str").printSchema()
 
 
 # zip two arrays
-- note both arrays must be strings
+
 df = df.withColumn("out_cxr_fn_zip", F.arrays_zip(F.col("out_marketing_cxr"), F.col("out_flight_nos_str"))
 
 - ...and then concat them
+    - note both arrays must be strings if you want to do this part
 df = df.withColumn('out_zip_concat', F.expr("transform(out_cxr_fn_zip, x -> concat_ws('-', x.out_marketing_cxr, x.out_flight_nos_str))"))

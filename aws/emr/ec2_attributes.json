@@ -1,0 +1,12 @@
+[
+    {
+        "SubnetId": "subnet-02081f320cb5351ea",
+        "AvailabilityZone": "us-east-1c",
+        "InstanceProfile": "EMR_EC2_DefaultRole",
+        "EmrManagedMasterSecurityGroup": "sg-0f66e63d9c0bc0a66",
+        "EmrManagedSlaveSecurityGroup": "sg-072364a416673d10f",
+        "AdditionalMasterSecurityGroups": [],
+        "AdditionalSlaveSecurityGroups": [],
+        "KeyName": "kf-ml-data-pn"
+    }
+]

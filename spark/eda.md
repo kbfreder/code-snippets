@@ -1,16 +1,21 @@
 
 
-// count if null
+# count if null
 
-## python
+```python
 df2.select(F.col("solution_counts").isNull).count()
+```
 
-## scala
+```scala
 df2.select(col("solution_counts").isNull).count()
+```
+
+# filter value
 
 
-// filter in list
 
-val pos_list: Array[String] = Array("US", "GB", "HK", "RU", "CA", "IN", "TW", "DE", "AU", "TH", "JP", "KR", "PH", "ES", "IT", "FR", "IL", "MY", "AE", "PT")
+## column value contains string
 
-val df2_filt = df2.filter(col("pos_decoded") isin(pos_list: _*))
+```python
+df.filter(F.col("url").contains('google.com'))
+```

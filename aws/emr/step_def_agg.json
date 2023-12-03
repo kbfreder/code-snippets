@@ -1,0 +1,23 @@
+[
+    {
+        "Name": "estream-data-agg",
+        "Type": "CUSTOM_JAR",
+        "ActionOnFailure": "CONTINUE",
+        "Jar": "command-runner.jar",
+        "Args": [
+            "spark-submit",
+            "--deploy-mode",
+            "cluster",
+            "--conf",
+            "spark.dynamicAllocation.enabled=false",
+            
+            "--jars",
+            "s3://tvlp-ds-users/kendra-frederick/scripts/argparse4j-0.8.1.jar",
+            "--class",
+            "LowestFaresEstreamAggWithArgs",
+
+            "s3://tvlp-ds-users/kendra-frederick/scripts/ti-lowestfaresestreamagg_2.11-2.2.0.jar",
+            "2023-02-08", "2023-02-13"
+        ]
+    }
+]

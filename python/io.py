@@ -71,16 +71,16 @@ def write_text(filename, list_obj):
             file.write(line + '\n')
 
 
-def write_text_file_json(dict_obj, filename):
-    # dict_copy = dict_obj.copy()
-    for k, v in dict_obj.items():
-        if isinstance(v, np.float64):
-            dict_obj[k] = float(v)
-        elif isinstance(v, np.int64):
-            dict_obj[k] = int(v)
+    def write_text_file_json(dict_obj, filename):
+        # dict_copy = dict_obj.copy()
+        for k, v in dict_obj.items():
+            if isinstance(v, np.float64):
+                dict_obj[k] = float(v)
+            elif isinstance(v, np.int64):
+                dict_obj[k] = int(v)
 
-    with open(filename, "w") as f:
-        json.dump(dict_obj, f)
+        with open(filename, "w") as f:
+            json.dump(dict_obj, f)
 
 
 def json_read_text_file(filename):

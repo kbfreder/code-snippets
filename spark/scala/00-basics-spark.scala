@@ -36,18 +36,19 @@ df.write.parquet("hdfs://path/to/data/")
 df.write.option("header", true).csv("/path/to/file.csv") 
 
 
-// filter
-val jb_raw = df_raw.filter(
-    (col("s_outOriginAirport") === 201398272) &&
-    (col("s_outDestinationAirport") === 168168192) && 
-    (col("s_outDeptDt") === 20220705) && 
-    (col("pos") === 353566720) &&
-    array_contains(col("s_outMarketingCxr"), 35717120)
-)
-
 // different way to refer to a column
 col("col_name")
 $"col_name"
 'col_name
 
 
+// quick dummy dataframe
+      val columns = Seq("language", "users_count")
+      val data = Seq(("Java", "20000"), ("Python", "100000"), ("Scala", "3000"))
+      spark.createDataFrame(data).toDF(columns:_*)
+
+// dummy df with Nulls
+import spark.implicits._
+val columns = Seq("id", "val", "next_val")
+val data = Seq((1, 10, Some(20)), (2, 20, Some(30)), (3, 30, None))
+val df = spark.createDataFrame(data).toDF(columns:_*)

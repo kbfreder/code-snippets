@@ -1,4 +1,20 @@
 
+# looping over objects
+
+## in S3
+
+
+sc = spark.sparkContext
+java_path = sc._jvm.java.net.URI.create(input_dir)
+hadoop_path = sc._jvm.org.apache.hadoop.fs.Path(input_dir)
+hadoop_fs = sc._jvm.org.apache.hadoop.fs.FileSystem.get(java_path, sc._jvm.org.apache.hadoop.conf.Configuration())
+iterator = hadoop_fs.listFiles(hadoop_path, True)
+
+s3_keys = []
+while iterator.hasNext():
+    s3_keys.append(iterator.next().getPath().toUri().getRawPath())  
+
+
 # PYTHON
 
 

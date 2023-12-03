@@ -1,18 +1,34 @@
 
+// select
+    // from a list
+var df2 = df.select(cache_cols.map(m=>col(m)):_*)
+var df2 = df.select(cache_cols.map(col(_)):_*)
 
+
+/// all and a computed col:
+var df2 = df.select($"*", posexplode($"request_PTC").as(Seq("requ_pos", "requ_ptc_")))
 
 
 // filter 
 // ref: https://sparkbyexamples.com/spark/spark-dataframe-where-filter/
-// note: there are multiple ways to refer to a column
-/// note the triple '=' and the double '&'
 
+/// note the triple '=' and the double '&'
 val ex_raw = df_raw.filter(
     (col("s_outOriginAirport") === 101452800) &&
     (col("s_outDestinationAirport") === 85398016) && 
     (col("s_outDeptDt") === 20220627) && 
     array_contains(col("s_outMarketingCxr"), 67895296)
 )
+
+/// column val is in a list 
+df_filt = df.filter(col("market").isin(TOP_MARKETS_LIST: _*)
+
+/// filter on column is / is not Null
+val cond_ow = ((col("in_origin_airport").isNull) && (col("in_destination_airport").isNull))
+val cond_other = ((col("in_origin_airport").isNotNull) && (col("in_destination_airport").isNotNull))
+
+
+
 
 //  =================================
 // GROUP-BY + AGG
