@@ -15,3 +15,11 @@ while [ "$d" != "$end_d" ]; do
     echo $d
     d=$(date -I -d "$d + 1 day")
 done
+
+
+# on a mac:
+## date math
+date -j -v +11d -f "%Y-%m-%d" $date_var +%Y-%m-%d
+
+## convert date format:
+date -j -f "%Y-%m-%d" $date_var +%Y-%m-%d

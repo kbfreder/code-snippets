@@ -67,7 +67,7 @@ ax1.set_title("Lifetime")
 
 
 # getting plots to go down first (vs across first)
-num = # total number of data to plot
+num = 5  # total number of data to plot
 num_cols = 2
 num_rows = int(num/num_cols)
 
@@ -82,7 +82,7 @@ for i, data in enumerate(data_list):
 
 
 # one title per row
-3 https://stackoverflow.com/questions/27426668/row-titles-for-matplotlib-subplot
+## https://stackoverflow.com/questions/27426668/row-titles-for-matplotlib-subplot
 fig, big_axes = plt.subplots( figsize=(15.0, 15.0) , nrows=3, ncols=1, sharey=True) 
 
 for row, big_ax in enumerate(big_axes, start=1):
@@ -194,7 +194,7 @@ ax.legend(ps, labels)
 
 # -----------------
 # give the legend a title
-plt.legend("title"="Days")
+plt.legend(title="Days")
 
 # -----------------
 # get bins from plt.hist:
@@ -218,12 +218,26 @@ plt.plot(plt.xlim(), plt.ylim(), ls='--')
 # ---------------
 # hide unused subplots
     ## this assumes all the blank plots are in the last row
-    num_blank_plots = (n_rows*n_cols) - i
-    if num_blank_plots > 0:
-        print("Deleting blank plots")
-        for j in range(num_blank_plots):
-            fig.delaxes(axs[n_rows-1][n_cols-(j+1)])
+num_blank_plots = (n_rows*n_cols) - i
+if num_blank_plots > 0:
+    for j in range(num_blank_plots):
+        fig.delaxes(axs[n_rows-1][n_cols-(j+1)])
 
 
 # ----------------
-# maker your own legend
+# make your own legend
+## see overlay plot above for one way
+
+
+
+# SEABORN
+# =======================
+
+# setting figure size
+
+## some methods are Axes-level:
+fig, ax = plt.subplots(figsize=(8,5))
+sns.distplot(..., ax=ax)
+
+## others are figure-level:
+sns.catplot(data=..., height=5, aspect=1.3``)
