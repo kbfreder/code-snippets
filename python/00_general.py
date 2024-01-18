@@ -7,7 +7,7 @@ import pandas as pd
 
 pd.set_option("display.max_columns", 100)
 
-# to silence the 'Setting with Copy' (??) warning
+# to silence the 'Settings with Copy' warning
 pd.options.mode.chained_assignment = None
 
 # if tab auto-complete isn't working in Jupyter
@@ -18,6 +18,13 @@ pd.options.mode.chained_assignment = None
 import warnings
 warnings.filterwarnings("ignore", category=RuntimeWarning)
 
+# divide by zero errors ("RuntimeWarning: invalid value encountered in true_divide")
+np.seterr(invalid='ignore')
+
+
+# ------------------------------
+# MISC
+# ------------------------------
 
 # to flatten a nested list:
 flat_list = [item for sublist in nested_list for item in sublist]
@@ -28,21 +35,39 @@ merged = list(itertools.chain(*list2d))
 
 
 
+# ------------------------------
 # Dataframes
+# ------------------------------
 
 ## differences between two
 (there is a function)
 
 ## concat a list of df's into a single df
-
 df_list = [df1, df2, ...]
 final_df = pd.concat(df_list)
 
 
+# reduce a list via a join:
+from functools import reduce
+df_joined = reduce(lambda df1, df2: df1.join(df2, on='key'), df_list)
+
+
+## concat 2 df's horizontally (combining columns)
+    ## when you know the indexes are aligned, but they aren't equal
+    ## Ref: https://github.com/pandas-dev/pandas/issues/25349
+    ## Note we reset_index, instead of using ignore_index=True
+new_df = pd.concat([df.reset_index(drop=True), scaled_df.reset_index(drop=True)], axis=1, sort=False)
+
+
+
+# ------------------------------
+# MISC
+# ------------------------------
 
 # flatten a list 
-flat_list = [item for sublist in t for item in sublist]
+flat_list = [item for sublist in nested_list for item in sublist]
 reduce(lambda a, b: a + b, l)
+
 
 # ------------------------------
 # SHOWING PROGRESS

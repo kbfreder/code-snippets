@@ -1,0 +1,160 @@
+{
+    "Cluster": {
+        "Id": "j-2FD4MD1HJIFUT",
+        "Name": "kerry_demo",
+        "Status": {
+            "State": "WAITING",
+            "StateChangeReason": {
+                "Message": "Cluster ready to run steps."
+            },
+            "Timeline": {
+                "CreationDateTime": "2023-03-01T05:08:46.939000-10:00",
+                "ReadyDateTime": "2023-03-01T05:15:47.494000-10:00"
+            }
+        },
+        "Ec2InstanceAttributes": {
+            "Ec2SubnetId": "subnet-02081f320cb5351ea",
+            "RequestedEc2SubnetIds": [
+                "subnet-02081f320cb5351ea"
+            ],
+            "Ec2AvailabilityZone": "us-east-1c",
+            "RequestedEc2AvailabilityZones": [],
+            "IamInstanceProfile": "EMR_EC2_DefaultRole",
+            "EmrManagedMasterSecurityGroup": "sg-0f66e63d9c0bc0a66",
+            "EmrManagedSlaveSecurityGroup": "sg-072364a416673d10f",
+            "AdditionalMasterSecurityGroups": [],
+            "AdditionalSlaveSecurityGroups": []
+        },
+        "InstanceCollectionType": "INSTANCE_GROUP",
+        "LogUri": "s3n://aws-logs-149036431886-us-east-1/elasticmapreduce/",
+        "ReleaseLabel": "emr-5.36.0",
+        "AutoTerminate": false,
+        "TerminationProtected": false,
+        "VisibleToAllUsers": true,
+        "Applications": [
+            {
+                "Name": "Hadoop",
+                "Version": "2.10.1"
+            },
+            {
+                "Name": "Spark",
+                "Version": "2.4.8"
+            },
+            {
+                "Name": "JupyterEnterpriseGateway",
+                "Version": "2.1.0"
+            },
+            {
+                "Name": "Hive",
+                "Version": "2.3.9"
+            }
+        ],
+        "Tags": [
+            {
+                "Key": "for-use-with-amazon-emr-managed-policies",
+                "Value": "true"
+            }
+        ],
+        "ServiceRole": "EMR_DefaultRole_V2",
+        "NormalizedInstanceHours": 120,
+        "MasterPublicDnsName": "ec2-3-235-165-35.compute-1.amazonaws.com",
+        "Configurations": [],
+        "AutoScalingRole": "EMR_AutoScaling_DefaultRole",
+        "ScaleDownBehavior": "TERMINATE_AT_TASK_COMPLETION",
+        "EbsRootVolumeSize": 10,
+        "KerberosAttributes": {},
+        "ClusterArn": "arn:aws:elasticmapreduce:us-east-1:149036431886:cluster/j-2FD4MD1HJIFUT",
+        "StepConcurrencyLevel": 1,
+        "PlacementGroups": [],
+        "OSReleaseLabel": "2.0.20220912.1",
+        "BootstrapActions": [
+            {
+                "Name": "Custom action",
+                "ScriptPath": "s3://tvlp-ds-users/shared/bootstrap-scripts/eda-min-bootstrap.sh",
+                "Args": []
+            }
+        ],
+        "InstanceGroups": [
+            {
+                "Id": "ig-36PUZZWLS1LLZ",
+                "Name": "Core - 2",
+                "Market": "ON_DEMAND",
+                "InstanceGroupType": "CORE",
+                "InstanceType": "c6g.2xlarge",
+                "RequestedInstanceCount": 2,
+                "RunningInstanceCount": 2,
+                "Status": {
+                    "State": "RUNNING",
+                    "StateChangeReason": {
+                        "Message": ""
+                    },
+                    "Timeline": {
+                        "CreationDateTime": "2023-03-01T05:08:47.076000-10:00",
+                        "ReadyDateTime": "2023-03-01T05:15:47.494000-10:00"
+                    }
+                },
+                "Configurations": [],
+                "ConfigurationsVersion": 0,
+                "LastSuccessfullyAppliedConfigurations": [],
+                "LastSuccessfullyAppliedConfigurationsVersion": 0,
+                "EbsBlockDevices": [
+                    {
+                        "VolumeSpecification": {
+                            "VolumeType": "gp2",
+                            "SizeInGB": 32
+                        },
+                        "Device": "/dev/sdb"
+                    },
+                    {
+                        "VolumeSpecification": {
+                            "VolumeType": "gp2",
+                            "SizeInGB": 32
+                        },
+                        "Device": "/dev/sdc"
+                    }
+                ],
+                "ShrinkPolicy": {}
+            },
+            {
+                "Id": "ig-2379SN7BLSWAR",
+                "Name": "Master - 1",
+                "Market": "ON_DEMAND",
+                "InstanceGroupType": "MASTER",
+                "InstanceType": "m5.xlarge",
+                "RequestedInstanceCount": 1,
+                "RunningInstanceCount": 1,
+                "Status": {
+                    "State": "RUNNING",
+                    "StateChangeReason": {
+                        "Message": ""
+                    },
+                    "Timeline": {
+                        "CreationDateTime": "2023-03-01T05:08:47.076000-10:00",
+                        "ReadyDateTime": "2023-03-01T05:15:25.213000-10:00"
+                    }
+                },
+                "Configurations": [],
+                "ConfigurationsVersion": 0,
+                "LastSuccessfullyAppliedConfigurations": [],
+                "LastSuccessfullyAppliedConfigurationsVersion": 0,
+                "EbsBlockDevices": [
+                    {
+                        "VolumeSpecification": {
+                            "VolumeType": "gp2",
+                            "SizeInGB": 32
+                        },
+                        "Device": "/dev/sdb"
+                    },
+                    {
+                        "VolumeSpecification": {
+                            "VolumeType": "gp2",
+                            "SizeInGB": 32
+                        },
+                        "Device": "/dev/sdc"
+                    }
+                ],
+                "ShrinkPolicy": {}
+            }
+        ]
+    }
+}

@@ -1,0 +1,49 @@
+{   "Cluster": {
+        "Name": "kf-test-cli",
+        "ReleaseLabel": "emr-5.36.0",
+        "ServiceRole": "EMR_DefaultRole_V2",
+        "Ec2InstanceAttributes": {
+            "InstanceProfile": "EMR_EC2_DefaultRole",
+            "KeyName": "kf-ml-data-pn"
+        },
+        "InstanceGroups": [
+            {
+                "Name": "Master - 1",
+                "InstanceGroupType": "MASTER",
+                "InstanceType": "m5.xlarge",
+                "InstanceCount": 1
+            },
+            {
+                "Name": "Core - 2",
+                "InstanceGroupType": "CORE",
+                "InstanceType": "c6g.xlarge",
+                "InstanceCount": 2
+            }
+        ],
+        "AutoTerminationPolicy": {
+            "IdleTimeout": 900
+        },
+        "Applications": [
+            {
+                "Name": "Hadoop",
+                "Version": "2.10.1"
+            },
+            {
+                "Name": "Spark",
+                "Version": "2.4.8"
+            },
+            {
+                "Name": "JupyterEnterpriseGateway",
+                "Version": "2.1.0"
+            }
+        ],
+        "LogUri": "s3n://aws-logs-149036431886-us-east-1/elasticmapreduce/",
+        "Tags": [
+            {
+                "Key": "for-use-with-amazon-emr-managed-policies",
+                "Value": "true"
+            }
+        ],
+        "VisibleToAllUsers": true
+    }
+}

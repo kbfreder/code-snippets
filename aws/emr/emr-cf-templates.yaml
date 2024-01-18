@@ -1,0 +1,63 @@
+AWSTemplateFormatVersion: 2010-09-09
+# Ref: https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-elasticmapreduce-cluster.html?icmpid=docs_cfn_console_designer#cfn-elasticmapreduce-cluster-bootstrapactions
+
+Parameters:
+  ClusterName:
+    Type: "String"
+    Default: "Jupyter_Small_Cluster_EMR6_Spark3"
+  EmrRelease:
+    Type: "String"
+    Default: "emr-6.9.0"
+    AllowedValues:
+    - "emr-6.9.0"
+    - "emr-6.8.0"
+  ClusterInstanceType:
+    Type: "String"
+    Default: "m5.xlarge"
+    AllowedValues:
+    - "m5.xlarge"
+    - "m5.2xlarge"
+    - "c6g.xlarge"
+    - "c6g.2xlarge"
+
+Resources:
+  EmrCluster:
+    Type: AWS::EMR::Cluster
+    Properties:
+      Applications:
+      - Name: Spark
+      - Name: JupyterEnterpriseGateway
+      - Name: Hive
+      - Name: Hadoop
+      EbsRootVolumeSize: '10'
+      Name: !Ref ClusterName
+      JobFlowRole: EMR_EC2_DefaultRole
+      ServiceRole: EMR_DefaultRole_V2
+      ReleaseLabel: !Ref EmrRelease
+      VisibleToAllUsers: true
+      Tags: 
+      - for-use-with-amazon-emr-managed-policies
+      # KF note: not sure about this syntax
+      BootstrapActions:
+        Name: data-science-eda
+        ScriptBootstrapAction: 
+          Path: s3://tvlp-ds-users/shared/bootstrap-scripts/eda-min-bootstrap.sh
+      LogUri: 
+        Fn::Sub: 's3://aws-logs-${AWS::AccountId}-${AWS::Region}/elasticmapreduce/'
+      Instances:
+        TerminationProtected: false
+        Ec2SubnetId: 'subnet-ab12345c'
+        MasterInstanceGroup:
+          InstanceCount: 1
+          InstanceType: !Ref ClusterInstanceType
+        CoreInstanceGroup:
+          InstanceCount: 2
+          InstanceType: !Ref ClusterInstanceType
+          Market: ON_DEMAND
+          Name: Core
+
+Outputs:
+  ClusterId:
+    Value:
+      Ref: EmrCluster
+    Description: The ID of the EMR Cluster

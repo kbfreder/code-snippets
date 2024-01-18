@@ -1,0 +1,30 @@
+{
+    "Steps": [
+        {
+            "Id": "s-1270L9VXU2O9M",
+            "Name": "hello world",
+            "Config": {
+                "Jar": "command-runner.jar",
+                "Properties": {},
+                "Args": [
+                    "spark-submit",
+                    "--deploy-mode",
+                    "cluster",
+                    "--conf",
+                    "spark.dynamicAllocation.enabled=false",
+                    "s3://tvlp-ds-users/kendra-frederick/scripts/hello_world.py",
+                    "--input",
+                    "2023-02-01"
+                ]
+            },
+            "ActionOnFailure": "CONTINUE",
+            "Status": {
+                "State": "PENDING",
+                "StateChangeReason": {},
+                "Timeline": {
+                    "CreationDateTime": "2023-03-01T10:09:29.250000-10:00"
+                }
+            }
+        }
+    ]
+}
