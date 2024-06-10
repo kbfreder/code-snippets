@@ -1,14 +1,37 @@
 
-
+from datetime import datetime, timedelta
 
 
 # Dates
-from datetime import datetime
 from dateutil.relativedelta import relativedelta
 
 now_date = datetime.today()
 past_date = now_date - relativedelta(months=3)
 
+
+
+
+# print datetime in local TZ
+from zoneinfo import ZoneInfo
+
+utc = ZoneInfo('UTC')
+localtz = ZoneInfo('US/Mountain')
+
+fit_start = datetime.now()
+print(f"Starting at {fit_start.astimezone(localtz).strftime('%Y-%m-%d %H:%M')} local time")
+
+
+# time something
+start_time = datetime.now()
+<do the thing>
+end_time = datetime.now()
+print(f"That took {(end_time-start_time)/timedelta(min=1):.2f} minutes")
+
+
+
+
+# CONVERTING DATA TYPES
+# =====================
 
 # Date from datetime
     # use .date() method:
@@ -18,8 +41,19 @@ shop_start_dt = datetime.datetime.strptime(shop_start_str, DATE_FORMAT).date()
 shop_start_dt
 > datetime.date(2022, 9, 20)
 
+# month from full date
+## this works, but results in a weird data type
+df1['visit_month_date'] = pd.to_datetime(df1['VISIT_DATE']).dt.to_period('M')
+
+## hacky but works. if you want/need a datetime object
+outbound_sms_df['month'] = outbound_sms_df['date'].apply(lambda dt: datetime(dt.year, dt.month, 1))
+
+## if a string works
+outbound_sms_df['month_str'] = outbound_sms_df['date'].apply(lambda dt: dt.strftime("%Y-%m"))
 
 
+# LOOPING OVER TIME
+# =====================
 # Loop over days, given start & end date
 shop_start_str = args.shop_start
 shop_end_str = args.shop_end
@@ -60,6 +94,19 @@ for i in range(num_months):
 
 # convert date types
 
+
+# month from full date
+## this works, but results in a weird data type
+df1['visit_month_date'] = pd.to_datetime(df1['VISIT_DATE']).dt.to_period('M')
+
+## hacky but works. if you want/need a datetime object
+outbound_sms_df['month'] = outbound_sms_df['date'].apply(lambda dt: datetime(dt.year, dt.month, 1))
+
+## if a string works
+outbound_sms_df['month_str'] = outbound_sms_df['date'].apply(lambda dt: dt.strftime("%Y-%m"))
+
+
+# SPARK
 ## long to datetime
     # eStreaming data has dates saved as long int's
 
@@ -102,3 +149,4 @@ df_mod2 = df_mod.withColumn("out_departure_date_ts", F.unix_timestamp(F.col("out
 
 ## unix timestamp to datetime
 F.from_unixtime()
+

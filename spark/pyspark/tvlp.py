@@ -7,6 +7,8 @@ from pyspark.sql.window import Window
 
 
 # assign group number based when a boolean column changes from 0 --> 1
+## idea being: `bool_col` is an indicator of when a different column changed 
+## (i.e. calculated using `lag` or `lead` window function)
 
 w_grp = (Window
     .partitionBy(keys)

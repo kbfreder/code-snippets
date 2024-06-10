@@ -13,7 +13,7 @@ plt.bar(xs, data_to_plot['data1'],
 plt.bar(xs+w, data_to_plot['data2'], width=w, color=color2, label="one model")
 
 plt.xticks(xs, labels)
-# plt.xlabel()
+plt.xlabel()
 plt.xticks(rotation=90)
 
 plt.legend();
@@ -21,15 +21,33 @@ plt.ylabel("MAE")
 plt.title("Lead Price Archive data - with carriers");
 
 
-# Seaborn heatmap
-# handy settings
-sns.heatmap(data, 
-            cmap="viridis", 
-            cbar_kws={"shrink": 0.5, "label": "min"},
-            square=True,
-            annot=True
-            )
+# stacked bar graph
+## use `bottom` keyword
 
+## example here is more complex then may be necesary, because datasets aren't equal in length
+plt.figure(figsize=(8,4))
+
+base_data = df['total_num_emails_sent'].value_counts().sort_index()
+bottom = np.zeros_like(base_data)
+plt.bar(base_data.index, base_data, label="total")
+bottom += base_data.values
+
+for label in ['bonus', 'nudge']:
+    col = f'num_{label}_emails'
+    data = df[col].value_counts().sort_index()
+    if data.index[0] == 0: # could make this adaptive
+        data = data[1:]
+
+    data_bottom = [bottom[list(base_data.index).index(di)] for di in data.index]
+    plt.bar(data.index, data, bottom=data_bottom, label=label)
+
+    for (di, val) in zip(data.index, data.values):
+        bottom[list(base_data.index).index(di)] += val
+
+plt.xticks(base_data.index, base_data.index)   
+plt.ylabel('num donor-contacts')
+plt.xlabel('num emails received in month')
+plt.legend();
 
 # -----------------
 # SUBPLOTS
@@ -59,11 +77,6 @@ for i, cxr in enumerate(plot_data[cxr_col].unique()):
 fig.suptitle(market);
 fig.tight_layout();
 
-
-# using seaborn with `ax` interface
-ax1 = fig.add_subplot(n,2,(i*2)+1)
-sns.heatmap(data, ax=ax1)
-ax1.set_title("Lifetime")
 
 
 # getting plots to go down first (vs across first)
@@ -121,6 +134,7 @@ fig, axs = plt.subplots(2,1,figsize=(10,4), sharex=True)
 axs[1].xaxis.set_tick_params(which='both', labelbottom=True)
 
 
+# ----------------------------
 # adjust width ratio of subplots
 fig, axs = plt.subplots(1,2,figsize=(10,4), sharey=True, gridspec_kw={'width_ratios':[2,1]})
 
@@ -130,11 +144,14 @@ fig, axs = plt.subplots(1,2,figsize=(10,4), sharey=True, gridspec_kw={'width_rat
 
 # -----------------
 # get a nice linear sequence of colors from a color map:
-import matplotlib.cm as cm
+# import matplotlib.cm as cm
+import matplotlib as mpl
 
 ranks = [1,10,20,50]
 cmap_name = "viridis_r"
-colors = [cm.get_cmap(cmap_name)(x) for x in np.linspace(0, 1, len(ranks))]
+# colors = [cm.get_cmap(cmap_name)(x) for x in np.linspace(0, 1, len(ranks))]
+colors = [mpl.colormaps.get_cmap(cmap_name)(x) for x in np.linspace(0, 1, len(ranks))]
+
 
 plt.figure(figsize=(8,5))
 for i, rank in enumerate(ranks):
@@ -142,7 +159,6 @@ for i, rank in enumerate(ranks):
     plt.scatter(xs, ys,
                 c=[colors[i]]
                 )
-
 
 
 # use sequence of Qualitative color map
@@ -230,6 +246,7 @@ if num_blank_plots > 0:
 
 
 
+
 # SEABORN
 # =======================
 
@@ -240,4 +257,18 @@ fig, ax = plt.subplots(figsize=(8,5))
 sns.distplot(..., ax=ax)
 
 ## others are figure-level:
-sns.catplot(data=..., height=5, aspect=1.3``)
+sns.catplot(data=..., height=5, aspect=1.3)
+
+
+# heatmap handy settings
+sns.heatmap(data, 
+            cmap="viridis", 
+            cbar_kws={"shrink": 0.5, "label": "min"},
+            square=True,
+            annot=True
+            )
+
+# using seaborn with `ax` interface
+ax1 = fig.add_subplot(n,2,(i*2)+1)
+sns.heatmap(data, ax=ax1)
+ax1.set_title("Lifetime")

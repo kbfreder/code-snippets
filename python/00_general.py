@@ -60,6 +60,15 @@ new_df = pd.concat([df.reset_index(drop=True), scaled_df.reset_index(drop=True)]
 
 
 
+# apply a function across a row:
+
+def func(row):
+    # ostensibily this is something more complex, but you get the idea
+    return row['A'] * row['B'] + row['C']
+
+## note axis=1, even though we're doing this for every row. Don't ask me why
+df['new_col'] = df.apply(func, axis=1)
+
 # ------------------------------
 # MISC
 # ------------------------------
