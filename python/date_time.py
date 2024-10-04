@@ -10,7 +10,6 @@ past_date = now_date - relativedelta(months=3)
 
 
 
-
 # print datetime in local TZ
 from zoneinfo import ZoneInfo
 
@@ -25,7 +24,8 @@ print(f"Starting at {fit_start.astimezone(localtz).strftime('%Y-%m-%d %H:%M')} l
 start_time = datetime.now()
 <do the thing>
 end_time = datetime.now()
-print(f"That took {(end_time-start_time)/timedelta(min=1):.2f} minutes")
+elapsed_time = (end_time - start_time)/timedelta(min=1)
+print(f"That took {elapsed_time:.2f} minutes")
 
 
 
@@ -106,7 +106,25 @@ outbound_sms_df['month'] = outbound_sms_df['date'].apply(lambda dt: datetime(dt.
 outbound_sms_df['month_str'] = outbound_sms_df['date'].apply(lambda dt: dt.strftime("%Y-%m"))
 
 
+# week
+## week number: can use isocalendar, I think?
+
+## date
+
+
+def get_week(d):
+    """returns date of Sunday of that week"""
+    wkday = d.weekday()
+    if wkday == 6:
+        return d
+    else:
+        return d - timedelta(days=wkday+1)
+
+
+
+# ================================
 # SPARK
+# ================================
 ## long to datetime
     # eStreaming data has dates saved as long int's
 

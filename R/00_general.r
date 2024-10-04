@@ -14,17 +14,28 @@ install.packages(c('readr', 'ggplot2', 'tidyr'))
 library(tidyverse)
 
 
+# get help on a package or function
+??ES.h
+
+
+# STRING MANIPS
+# =========================
+
 # concat string + int
 sprintf("rank_%d", x)
 
 
-# if/then, ifelse
 
+# LOGIC
+# =========================
+
+# if/then, if/else
 if (x == y) {
     z = 0
 } else {
     z = 1
 }
+
 
 
 # SHORTCUTS
@@ -41,3 +52,11 @@ Ctrl/Cmd + Shift + M
 
 # assignment: <-
 Alt + '-'
+
+
+# FUNCTIONS 
+# ==================
+
+function_name <- function(parameters){
+  function body 
+}

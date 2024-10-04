@@ -1,4 +1,5 @@
-
+# BAR GRAPHS
+# ----------------------------------
 # bar graph of 2 entities side-by-side
 xs = np.arange(len(data_to_plot))
 w = 0.4
@@ -49,8 +50,11 @@ plt.ylabel('num donor-contacts')
 plt.xlabel('num emails received in month')
 plt.legend();
 
-# -----------------
+
+# ============================================
 # SUBPLOTS
+# ============================================
+
 # subplot
     # num_rows, num_cols
 fig, _ = plt.subplots(2,1, figsize=(12, 10))
@@ -119,7 +123,6 @@ plt.show()
 
 
 # share x or y axis, but repeat tick labels
-# ----------------------------
 
 ## for yaxis:
 fig, axs = plt.subplots(1,2,figsize=(10,4), sharey=True)
@@ -134,13 +137,13 @@ fig, axs = plt.subplots(2,1,figsize=(10,4), sharex=True)
 axs[1].xaxis.set_tick_params(which='both', labelbottom=True)
 
 
-# ----------------------------
 # adjust width ratio of subplots
 fig, axs = plt.subplots(1,2,figsize=(10,4), sharey=True, gridspec_kw={'width_ratios':[2,1]})
 
 
 # ===========================
 # COLORS
+# ===========================
 
 # -----------------
 # get a nice linear sequence of colors from a color map:

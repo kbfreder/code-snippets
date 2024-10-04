@@ -38,6 +38,7 @@ both are used to handle dependencies and ensure certain conditions are met befor
 https://mastering-shiny.org/reactive-graph.html?q=reactlog#the-reactlog-package
 
 
+
 # `eventReactive` vs `observeEvent`
 
 ## `eventReactive`
@@ -49,8 +50,8 @@ https://mastering-shiny.org/reactive-graph.html?q=reactlog#the-reactlog-package
 - archetypical example:
 ```R
 # server function
-x1 <- eventReactive({
-    input$submit_button,
+x1 <- eventReactive(
+    input$submit_button, {
     funcion_to_compute_value_of_x1(input$n1)
 })
 
@@ -62,7 +63,7 @@ output$plot <- renderPlot({
 ^ here, x1 only get evaluated and plot only gets render once the button is clicked, not when the value for n1 gets updated.
 
 ## `observeEvent`
-- similar to eventReactive..
+- similar to eventReactive...
 - 2 args:
     1. what to take a dependency on ("eventExpr")
     2. code to run ("handlerExpr")
@@ -76,3 +77,41 @@ output$plot <- renderPlot({
 - behind the scenes they are using `isolate()` to access the value of a reactive without taking a dependency on it
 - `observeEvent` = observe({x; isolate(y)})
 - `eventReactive` = reactive({x; isolate(y)})
+
+
+
+# hiding elements until X happens
+
+ex: show text only after actionButton clicked
+with data validation
+
+`shinyjs` works nicely here, with its `hidden` and `show` functions:
+
+```
+ui <-
+  fluidPage(
+    shinyFeedback::useShinyFeedback(), # not required but also nice
+    useShinyjs(),
+    ...
+    textInput("text1", ...), # note: default `value` = ""
+    actionButton("submit"),
+    ...
+    hidden(htmlOutput("out_2")),
+    ...
+  )
+
+server <- function(input, output) {
+    observeEvent(input$submit), {
+        if (input$text1 == "" ) {
+            shinyFeedback::showFeedbackDanger("text1", "Must enter text!")
+            return()
+        } else {
+            shinyFeedback::hideFeedback("text1")
+        }
+    }
+    # alt: can use: `validate(need(...))` but this will fail silently
+}
+```
+
+**NOTE**: `hidden` doesn't work on some elements, such as `DT::dataTableOutput()`
+- best(?)/an option here is to repeat data validation inside code that generates data table
