@@ -20,12 +20,16 @@ fit_start = datetime.now()
 print(f"Starting at {fit_start.astimezone(localtz).strftime('%Y-%m-%d %H:%M')} local time")
 
 
-# time something
+# TIME SOMETHING
+# =====================
 start_time = datetime.now()
-<do the thing>
+#<do the thing>
 end_time = datetime.now()
 elapsed_time = (end_time - start_time)/timedelta(min=1)
 print(f"That took {elapsed_time:.2f} minutes")
+
+
+# using tqdm
 
 
 

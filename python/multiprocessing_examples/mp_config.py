@@ -1,0 +1,2 @@
+
+LOGGER_NAME = 'Bob'

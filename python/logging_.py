@@ -1,4 +1,7 @@
 
+import logging
+
+
 def configure_logger(
         logger_name: str,
         log_level: int = 20, # INFO
@@ -26,19 +29,40 @@ def configure_logger(
     logging.Logger object
     """
     # logging formatting
-    msg_fmt = '%(asctime)s - %(filename)s - %(message)s'
+    stdout_msg_fmt = '%(asctime)s - %(message)s'
+    file_msg_fmt = '%(asctime)s - %(levelname)s - %(filename)s - %(message)s'
+
     date_fmt = '%Y-%m-%d %H:%M'
 
-    basic_format = {'format': msg_fmt, 'datefmt': date_fmt}
-    fmtr_format = {'fmt': msg_fmt, 'datefmt': date_fmt}
+    # basic_format = {'format': msg_fmt, 'datefmt': date_fmt}
+    stdout_fmtr = {'fmt': stdout_msg_fmt, 'datefmt': date_fmt}
+    file_fmtr = {'fmt': file_msg_fmt, 'datefmt': date_fmt}
 
-    logging.basicConfig(level=log_level, **basic_format)
+    # logging.basicConfig(level=log_level, **basic_format)
     logger = logging.getLogger(logger_name)
+    logger.setLevel(min(log_level, log_file_level))
+
+    # create STDOUT handler
+    s_handler = logging.StreamHandler()
+    s_handler.setLevel(log_level)
+    s_handler.setFormatter(logging.Formatter(**stdout_fmtr))
+    logger.addHandler(s_handler)
 
     if log_file_path:
         f_handler = logging.FileHandler(log_file_path)
         f_handler.setLevel(log_file_level)
-        f_handler.setFormatter(logging.Formatter(**fmtr_format))
+        f_handler.setFormatter(logging.Formatter(**file_fmtr))
         logger.addHandler(f_handler)
 
     return logger
+
+# usage
+
+logger = configure_logger(
+    'loggy-mc-logger',
+    log_file_path="./logs/test.txt",
+    log_file_level=10
+)
+
+logger.debug("Test message - DEBUG")
+logger.info("Test message - INFO")

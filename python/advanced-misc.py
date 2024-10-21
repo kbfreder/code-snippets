@@ -29,3 +29,11 @@ df['donation_grp_num'] = (df['is_donation'].eq(1)
 dtns_df['camp_pd_id'] = (dtns_df.groupby('donor_number')
                          ['during_campaign'].transform(lambda x: (x != x.shift()).cumsum())
                         )
+
+  
+# sort a dict
+file_ext_counts_sorted = {k: v for k,v in sorted(file_ext_counts.items(), key=lambda x: x[1], reverse=True)}
+
+
+# detect if string is numeric
+txt.isnumeric()
