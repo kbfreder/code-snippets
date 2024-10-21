@@ -5,7 +5,7 @@ import logging
 from logging.handlers import QueueHandler
 
 from mp_logger import logger_process
-from mp_worker import worker_process
+from mp_worker import worker_process_func
 from mp_config import LOGGER_NAME
 
 
@@ -41,7 +41,7 @@ if __name__ == "__main__":
             ## NOTE: args to worker_process func get serialized, so keeping them as small 
             ## as possible is beneficial
             results = pool.starmap(
-                worker_process, 
+                worker_process_func, 
                 [(item, log_queue) for item in list_of_data_to_process]
             )
 
