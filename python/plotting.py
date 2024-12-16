@@ -152,8 +152,8 @@ import matplotlib as mpl
 
 ranks = [1,10,20,50]
 cmap_name = "viridis_r"
-# colors = [cm.get_cmap(cmap_name)(x) for x in np.linspace(0, 1, len(ranks))]
 colors = [mpl.colormaps.get_cmap(cmap_name)(x) for x in np.linspace(0, 1, len(ranks))]
+# colors = [cm.get_cmap(cmap_name)(x) for x in np.linspace(0, 1, len(ranks))]
 
 
 plt.figure(figsize=(8,5))
@@ -165,7 +165,8 @@ for i, rank in enumerate(ranks):
 
 
 # use sequence of Qualitative color map
-colors = iter([plt.cm.tab20(i) for i in range(20)])
+# colors = iter([plt.cm.tab20(i) for i in range(20)])
+colors = list([plt.cm.tab20(i) for i in range(20)])
 ...
 plt.scatter(x, y, c=next(colors))
 
@@ -232,7 +233,14 @@ plt.tick_params(
 
 # ---------------
 # plot a diagonal line of y=x
+## if y=x in current graph
 plt.plot(plt.xlim(), plt.ylim(), ls='--')
+
+## otherwise:
+line_min = 0
+line_max = 10 # or plt.xlim()[1] or plt.ylim()[1]
+plt.plot([line_min, line_max], [line_min, line_max], ls='--')
+
 
 # ---------------
 # hide unused subplots
@@ -262,6 +270,11 @@ sns.distplot(..., ax=ax)
 ## others are figure-level:
 sns.catplot(data=..., height=5, aspect=1.3)
 
+# using seaborn with `ax` interface
+ax1 = fig.add_subplot(n,2,(i*2)+1)
+sns.heatmap(data, ax=ax1)
+ax1.set_title("Lifetime")
+
 
 # heatmap handy settings
 sns.heatmap(data, 
@@ -271,7 +284,12 @@ sns.heatmap(data,
             annot=True
             )
 
-# using seaborn with `ax` interface
-ax1 = fig.add_subplot(n,2,(i*2)+1)
-sns.heatmap(data, ax=ax1)
-ax1.set_title("Lifetime")
+## hiding the diagonal & upper R half of a heatmap:
+N = 50 # shape of matrix (assuming a square matrix)
+mtx_copy = sim_mtx.copy()
+
+for i in range(N):
+    for j in range(i, N):
+        mtx_copy[i,j] = np.nan
+
+sns.heatmap(mtx_copy, ...)

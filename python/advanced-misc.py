@@ -37,3 +37,15 @@ file_ext_counts_sorted = {k: v for k,v in sorted(file_ext_counts.items(), key=la
 
 # detect if string is numeric
 txt.isnumeric()
+
+
+# chunk a list
+import math
+
+chunk_size = 100
+n = len(list_to_process)
+## optionally if you need to know this, e.g. if using `tqdm`
+# num_chunks = math.ceil(n/chunk_size)
+
+for i in range(0, n, chunk_size):
+  list_chunk = list_to_process[i:i+chunk_size]

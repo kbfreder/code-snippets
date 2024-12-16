@@ -30,9 +30,14 @@ print(f"That took {elapsed_time:.2f} minutes")
 
 
 # using tqdm
+from tqdm import tqdm
+## for dummy example
+import time
+import random
 
-
-
+n = 20
+for item in tqdm(range(n), desc="things", total=n):
+    time.sleep(random.random())
 
 # CONVERTING DATA TYPES
 # =====================

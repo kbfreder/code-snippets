@@ -13,7 +13,7 @@ from mp_config import LOGGER_NAME
 if __name__ == "__main__":
 
     # load your raw data
-    list_of_data_to_process = [] 
+    list_of_data_to_process = range(100)
 
     # must use Queue inside Manager
     with mp.Manager() as manager:
@@ -28,7 +28,7 @@ if __name__ == "__main__":
         log_filename = "test.log"
         log_path = os.path.join(log_dir, log_filename)
 
-        num_proc = mp.cpu_count()
+        num_proc = 4 #mp.cpu_count()
 
         # using a Pool handles a lot of things for you
         with mp.Pool(processes=num_proc) as pool:
