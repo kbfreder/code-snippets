@@ -86,3 +86,26 @@ def write_text_file_json(dict_obj, filename):
 def json_read_text_file(filename):
     with open(filename, "r") as f:
         return json.load(f)
+    
+
+# -------------------------------
+
+# opening a password-protected file
+import os
+import io
+import msoffcrypto
+from dotenv import load_dotenv
+import pandas as pd
+
+## password stored in .env file
+load_dotenv(".env")
+
+## file is an Excel file
+decryp_wb = io.BytesIO()
+
+with open(DATA_PATH, 'rb') as file:
+    excel_file = msoffcrypto.OfficeFile(file)
+    excel_file.load_key(password=os.environ.get("PASSWORD"))
+    excel_file.decrypt(decryp_wb)
+
+df = pd.read_excel(decryp_wb)
